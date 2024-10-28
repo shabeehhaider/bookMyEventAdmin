@@ -1,0 +1,155 @@
+<template>
+  <div class="wrapper">
+    <form @submit.prevent="handleLogin">
+      <h1>Login</h1>
+
+      <div class="input-box">
+        <i class="bx bxs-user"></i>
+        <input type="text" placeholder="Username" v-model="username" />
+      </div>
+
+      <div class="input-box">
+        <i class="bx bxs-lock-alt"></i>
+        <input type="password" placeholder="Password" v-model="password" />
+      </div>
+
+      <div class="remember-forget">
+        <label><input type="checkbox" v-model="rememberMe" /> Remember me</label>
+        <NuxtLink to="/forgot-password">Forgot password?</NuxtLink>
+      </div>
+
+      <button type="submit" class="btn">Login</button>
+
+      <div class="register-link">
+        <p>Don't have an account? <br />
+          <NuxtLink to="/register">Register</NuxtLink>
+        </p>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const username = ref('')
+const password = ref('')
+const rememberMe = ref(false)
+
+const handleLogin = () => {
+  console.log("Logging in with:", { username: username.value, password: password.value, rememberMe: rememberMe.value })
+}
+</script>
+
+<style scoped lang="scss">
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 20px);
+  // background: linear-gradient(135deg, #0093E9, #80D0C7);
+}
+
+form {
+  background-color: #ffffff;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  h1 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+
+  .input-box {
+    position: relative;
+    margin-bottom: 1.2rem;
+
+    i {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: #888;
+      font-size: 1.2rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 10px 10px 35px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: #0093E9;
+        outline: none;
+      }
+    }
+  }
+
+  .remember-forget {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #666;
+
+    a {
+      color: #0093E9;
+      text-decoration: none;
+      transition: color 0.3s;
+
+      &:hover {
+        color: #006bb3;
+      }
+    }
+  }
+
+  .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    background-color: #0093E9;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+
+    &:hover {
+      background-color: #006bb3;
+    }
+  }
+
+  .register-link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+
+    a {
+      color: #0093E9;
+      text-decoration: none;
+      transition: color 0.3s;
+
+      &:hover {
+        color: #006bb3;
+      }
+    }
+  }
+}
+</style>
