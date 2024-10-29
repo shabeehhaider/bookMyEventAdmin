@@ -1,5 +1,5 @@
 <template>
-  <Register />
+  <AdminDashboard />
 </template>
 <script setup>
 </script>

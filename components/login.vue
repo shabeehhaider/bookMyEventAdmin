@@ -15,44 +15,46 @@
 
       <div class="remember-forget">
         <label><input type="checkbox" v-model="rememberMe" /> Remember me</label>
-        <NuxtLink to="/forgot-password">Forgot password?</NuxtLink>
       </div>
 
       <button type="submit" class="btn">Login</button>
-
-      <div class="register-link">
-        <p>Don't have an account? <br />
-          <NuxtLink to="/register">Register</NuxtLink>
-        </p>
-      </div>
+      
     </form>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from '#app'  // Nuxt's built-in router composable
+
+
+const router = useRouter()  // Initialize router
 
 const username = ref('')
 const password = ref('')
 const rememberMe = ref(false)
 
 const handleLogin = () => {
-  console.log("Logging in with:", { username: username.value, password: password.value, rememberMe: rememberMe.value })
+  console.log("Logging in with:", { username: username.value, password: password.value, rememberMe: rememberMe.value });
+  router.push('/dashboard') 
 }
 </script>
 
-<style scoped lang="scss">
+<style>
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
+</style>
+
+<style scoped lang="scss">
+
 .wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   height: calc(100vh - 20px);
-  // background: linear-gradient(135deg, #0093E9, #80D0C7);
 }
 
 form {
