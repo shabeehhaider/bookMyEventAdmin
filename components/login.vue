@@ -25,18 +25,47 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from '#app'  // Nuxt's built-in router composable
-
-
-const router = useRouter()  // Initialize router
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
 const username = ref('')
 const password = ref('')
-const rememberMe = ref(false)
+const rememberMe = ref( false )
+const router = useRouter()
 
-const handleLogin = () => {
-  console.log("Logging in with:", { username: username.value, password: password.value, rememberMe: rememberMe.value });
-  router.push('/dashboard') 
+
+const handleLogin = async () => {
+  console.log( "Logging in with:", { username: username.value, password: password.value, rememberMe: rememberMe.value } )
+  try {
+    const response = await axios.post('http://localhost:3000/api/auth/login/local', {
+      email: username.value,
+      password: password.value,
+    })
+
+    const { token, user } = response.data
+    console.log( '---user-', user );
+
+    // Save token in cookies or local storage
+    if (rememberMe.value) {
+      localStorage.setItem('authToken', token) // Persistent storage
+    } else {
+      sessionStorage.setItem('authToken', token) // Session-only storage
+    }
+
+    // Redirect to the dashboard or home page
+    router.push({ path: '/dashboard' })
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      const errorData = error.response.data
+      if (errorData.emailError) {
+        alert('Email wasn’t found')
+      } else if (errorData.passwordError) {
+        alert('Password does not match')
+      }
+    } else {
+      alert('An unexpected error occurred')
+    }
+  }
 }
 </script>
 

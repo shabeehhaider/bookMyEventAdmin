@@ -1,0 +1,9 @@
+require('ts-node/register'); // Required to run TypeScript files
+const config = require('./src/config/config').default;
+
+module.exports = {
+  "config": "src/config/config.js",
+  'models-path': 'src/models',
+  'seeders-path': 'src/seeders',
+  'migrations-path': 'src/migrations',
+};
