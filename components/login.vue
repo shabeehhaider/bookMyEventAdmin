@@ -33,24 +33,17 @@ const password = ref('')
 const rememberMe = ref( false )
 const router = useRouter()
 
-
 const handleLogin = async () => {
-  console.log( "Logging in with:", { username: username.value, password: password.value, rememberMe: rememberMe.value } )
   try {
     const response = await axios.post('http://localhost:3000/api/auth/login/local', {
       email: username.value,
       password: password.value,
     })
-
     const { token, user } = response.data
-    console.log( '---user-', user );
 
-    // Save token in cookies or local storage
-    if (rememberMe.value) {
-      localStorage.setItem('authToken', token) // Persistent storage
-    } else {
-      sessionStorage.setItem('authToken', token) // Session-only storage
-    }
+      localStorage.setItem('user',  JSON.stringify( user )) // Persistent storage
+      sessionStorage.setItem('accessToken', token.accessToken) // Session-only storage
+      sessionStorage.setItem('refreshToken', token.refreshToken) // Session-only storage
 
     // Redirect to the dashboard or home page
     router.push({ path: '/dashboard' })

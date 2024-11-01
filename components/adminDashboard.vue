@@ -2,8 +2,8 @@
   <div class="dashboard">
     <aside class="sidebar" :class="{ 'sidebar-collapsed': !isSidebarOpen }">
       <button @click="toggleSidebar" class="sidebar-toggle">
-      <i :class="isSidebarOpen ? 'bx bx-chevron-left' : 'bx bx-menu'"></i>
-    </button>
+        <i :class="isSidebarOpen ? 'bx bx-chevron-left' : 'bx bx-menu'"></i>
+      </button>
       <nav>
         <ul>
           <li><a href="#"><i class="bx bxs-dashboard"></i> <span v-if="isSidebarOpen">Dashboard</span></a></li>
@@ -16,7 +16,13 @@
 
     <section class="content">
       <header class="content-header">
-        <h1>Admin Dashboard</h1>
+        <div class="header-content">
+          <h1>Admin Dashboard</h1>
+          <div class="user-info">
+            <span>Welcome, {{ userData?.username || 'Admin' }}</span>
+            <button @click="logout" class="logout-btn">Logout</button>
+          </div>
+        </div>
       </header>
       <div class="content-body">
         <p>Admin content here</p>
@@ -27,28 +33,35 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const isSidebarOpen = ref(true)
+const userData = ref(null)
 
+// Retrieve user data from localStorage on component mount
+onMounted(() => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  if (user) {
+    userData.value = user
+  }
+})
+
+// Toggle Sidebar
 function toggleSidebar() {
   isSidebarOpen.value = !isSidebarOpen.value
+}
+
+// Logout function
+function logout() {
+  localStorage.removeItem('user')
+  sessionStorage.clear()
+  router.push('/')
 }
 </script>
 
 <style scoped>
-.sidebar-toggle {
-  background: none;
-  border: none;
-  color: #aaa;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.sidebar-toggle:hover {
-  color: #fff;
-}
 .dashboard {
   display: flex;
   min-height: 100vh;
@@ -119,6 +132,9 @@ nav ul li a i {
 }
 
 .content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #0093E9;
   color: #fff;
   padding: 1rem;
@@ -126,14 +142,33 @@ nav ul li a i {
   margin-bottom: 1rem;
 }
 
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info span {
+  margin-right: 1rem;
+}
+
+.logout-btn {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+}
+
 .content-body {
   background-color: #fff;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.sidebar-collapsed .sidebar-toggle{
-  text-align: left;
-  padding: 0;
 }
 </style>
