@@ -1,11 +1,13 @@
 import express, {type Application} from 'express';
 import authRoutes from './routes/authRoutes';
+import customerRoutes from './routes/customerRoutes';
 //import userRoutes from './routes/user.routes';
 import dotenv from 'dotenv';
 import passport from 'passport';
 import cors from 'cors';
 import session from 'express-session';
 import bodyParser from 'body-parser';
+import { errorHandler } from './middlewares/errorHandler';
 import './config/passport-setup';
 // Load environment variables from .env file
 dotenv.config();
@@ -35,6 +37,7 @@ app.use( cors( corsOptions ) );
 app.use( bodyParser.json() );
 
 app.use( '/api/auth', authRoutes );
-//app.use('/api/users', userRoutes);
-
+app.use('/api', customerRoutes);
+// Error handling middleware
+app.use(errorHandler);
 export default app;

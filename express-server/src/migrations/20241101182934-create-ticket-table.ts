@@ -18,7 +18,11 @@ export = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      event: {
+      eventDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      eventName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -34,6 +38,10 @@ export = {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,
+      },
+      status: {
+        type: DataTypes.ENUM('Active', 'Canceled', 'Completed'),
+        defaultValue: 'Active',
       },
       createdAt: {
         type: DataTypes.DATE,
