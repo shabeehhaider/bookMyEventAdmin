@@ -2,14 +2,13 @@ import { QueryInterface, DataTypes } from 'sequelize';
 
 export = {
   up: async (queryInterface: QueryInterface) => {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('customers', {
       id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      username: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -21,40 +20,29 @@ export = {
           isEmail: true,
         },
       },
-      userPassword: {
+      gender: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      accessToken: {
+      dateOfBirth: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      },
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.ENUM('Resident', 'Tourist'),
+        allowNull: false,
+      },
+      passportNumber: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      refreshToken: {
+      emiratesID: {
         type: DataTypes.STRING,
         allowNull: true,
-      },
-      resetToken: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      resetTokenExpiry: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      },
-      role: {
-        type: DataTypes.ENUM('super_admin', 'admin', 'customer', 'user'),
-        allowNull: true,
-        defaultValue: 'user',
-      },
-      createdBy: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'users', // Self-reference to track which admin created a customer
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -70,6 +58,6 @@ export = {
   },
 
   down: async (queryInterface: QueryInterface) => {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('customers');
   },
 };

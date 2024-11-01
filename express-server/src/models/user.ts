@@ -13,6 +13,7 @@ interface UserAttributes {
   resetToken?: string | null; // Optional, can be null initially
   resetTokenExpiry?: Date | null; // Optional, can be null initially
   role?: string; // Optional, can be null initially
+  createdBy: number
 
 }
 
@@ -31,9 +32,14 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
   public resetToken: string | null | undefined; // Allow null here
   public resetTokenExpiry: Date | null | undefined; // Allow null here
   public role?: string;
+  public createdBy!: number;
   // Timestamps
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+  static ROLE_SUPER_ADMIN: string;
+  static ROLE_ADMIN: string;
+  static ROLE_CUSTOMER_SERVICE: string;
+  static ROLE_USER: string;
 
     // Method to check if the entered current password is correct
   async checkPassword( enteredPassword: string ): Promise<boolean> {
@@ -87,14 +93,29 @@ User.init( {
     allowNull: true  // Optional
   },
   role: {
-    type: DataTypes.STRING,
-    allowNull: true, // Allow null for role users
+    type: DataTypes.ENUM('super_admin', 'admin', 'customer', 'user'),
+    allowNull: true,
+    defaultValue: 'user',
+  },
+  // Optionally add 'createdBy' to track which admin created a customer
+  createdBy: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: User, // Self-referencing for admins
+      key: 'id',
+    },
   },
 }, {
   sequelize,
   modelName: 'User',
   tableName: 'users', // Make sure this matches your database table name
   timestamps: true,  // Adds createdAt and updatedAt fields
-});
+} );
+// Define role-based access
+User.ROLE_SUPER_ADMIN = 'super_admin';
+User.ROLE_ADMIN = 'admin';
+User.ROLE_CUSTOMER_SERVICE = 'customer';
+User.ROLE_USER = 'user';
 
 export default User;
