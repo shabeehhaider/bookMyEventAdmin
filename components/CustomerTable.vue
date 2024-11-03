@@ -44,7 +44,7 @@ const customers = ref([])
 // Fetch customers with ticket information on component mount
 onMounted(async () => {
   try {
-    const response = await axios.get(`${config.public.apiBaseUrl}/api/customers-with-tickets`) // Ensure this endpoint exists in your backend
+    const response = await axios.get(`${config.public.apiBaseUrl}/customers-with-tickets`) // Ensure this endpoint exists in your backend
     customers.value = response.data
   } catch (error) {
     console.error('Error fetching customer data:', error)

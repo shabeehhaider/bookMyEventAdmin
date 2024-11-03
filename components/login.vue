@@ -38,7 +38,7 @@ const router = useRouter()
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post(`${config.public.apiBaseUrl}/api/auth/login/local`, {
+    const response = await axios.post(`${config.public.apiBaseUrl}/auth/login/local`, {
       email: username.value,
       password: password.value,
     })
