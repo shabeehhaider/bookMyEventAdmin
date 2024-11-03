@@ -21,13 +21,21 @@ export = {
       updatedAt: new Date(),
     },
     {
-      username: 'john@example.com',
+      username: 'Jane Smith',
       email: 'jane@example.com',
       userPassword: hashedPassword,
       role: 'customer',
       createdAt: new Date(),
       updatedAt: new Date(),
-    },
+      },
+      {
+        username: 'Ali Rashid',
+        email: 'alirashid@example.com',
+        userPassword: hashedPassword,
+        role: 'customer',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ], {} );
   },
 
