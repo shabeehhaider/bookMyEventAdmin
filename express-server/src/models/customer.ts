@@ -43,16 +43,10 @@ Customer.init({
   passportNumber: {
     type: DataTypes.STRING,
     allowNull: true,
-    validate: {
-      isAlphanumeric: true,
-    },
   },
   emiratesID: {
     type: DataTypes.STRING,
     allowNull: true,
-    validate: {
-      isAlphanumeric: true,
-    },
   },
 }, {
   sequelize,

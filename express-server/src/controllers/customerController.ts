@@ -194,6 +194,23 @@ class CustomerController {
       next( error );
     }
   }
+  async getAllCustomersWithTickets( req: Request, res: Response, next: NextFunction ): Promise<void> { 
+    try {
+      const customers = await Customer.findAll({
+        attributes: ['name', 'email', 'gender', 'phoneNumber', 'status'], // Select specific customer fields
+        include: [
+          {
+            model: Ticket,
+            attributes: ['eventDate', 'eventName', 'price', 'status'], // Select specific ticket fields
+          }
+        ]
+      });
+  
+      res.status(200).json(customers);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new CustomerController();

@@ -27,6 +27,9 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { useRuntimeConfig } from '#app' // import useRuntimeConfig
+
+const config = useRuntimeConfig()
 
 const username = ref('')
 const password = ref('')
@@ -35,7 +38,7 @@ const router = useRouter()
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post('http://localhost:3000/api/auth/login/local', {
+    const response = await axios.post(`${config.public.apiBaseUrl}/api/auth/login/local`, {
       email: username.value,
       password: password.value,
     })

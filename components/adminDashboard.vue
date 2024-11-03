@@ -25,8 +25,9 @@
         </div>
       </header>
       <div class="content-body">
-        <p>Admin content here</p>
-        <slot />
+        <h2>Customer Details</h2>
+        <CustomerTable />        
+<slot />
       </div>
     </section>
   </div>
@@ -35,6 +36,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import CustomerTable from '@/components/CustomerTable.vue'
+import { useRuntimeConfig } from '#app' // import useRuntimeConfig
+
+const config = useRuntimeConfig()
+
 
 const router = useRouter()
 const isSidebarOpen = ref(true)

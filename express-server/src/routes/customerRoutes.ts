@@ -11,5 +11,6 @@ router.put('/customers/:id', CustomerController.updateCustomer);
 router.delete('/customers/:id', CustomerController.deleteCustomer);
 router.post('/customers/:customerId/tickets', CustomerController.addTicket);
 router.get('/customers/:customerId/tickets',verifyTokenAndRole, CustomerController.getCustomerTickets);
+router.get('/customers-with-tickets', CustomerController.getAllCustomersWithTickets);
 
 export default router;
